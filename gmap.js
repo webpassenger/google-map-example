@@ -236,7 +236,7 @@ function GMap(){
 			map.current_georesults = new Object();	
 			map.current_georesults.streets = new Array();
 			map.current_georesults.markers = new Object();*/
-	    	if (status == google.maps.GeocoderStatus.OK) {
+	    		if (status == google.maps.GeocoderStatus.OK) {
 				//console.dir(results);
 				var str = "<div id='infoAddress'>В этом месте адрес не найден</div>";
 				var result_idx = -1;
@@ -409,14 +409,6 @@ function GMap(){
 	
 	this.getParkingByLatLng = function(latlng){
 		for (var i=0;i<parkings.length;i++){
-			//if (google.maps.geometry.poly.containsLocation(latlng,parkings[i].polygon) == true) return parkings[i];
-			/*for (k = 0;  k < parkings[i].coords.length - 1; j = i++)
-				for (j = parkings[i].coords.length - 1;)
-        {
-            if ((((poly[i].Lt <= point.Lt) && (point.Lt < poly[j].Lt)) || ((poly[j].Lt <= point.Lt) && (point.Lt < poly[i].Lt))) &&
-                (point.Lg < (poly[j].Lg - poly[i].Lg) * (point.Lt - poly[i].Lt) / (poly[j].Lt - poly[i].Lt) + poly[i].Lg))
-                c = !c;
-        }*/
 			if (this.isPointInPoly(parkings[i].coords,latlng) == true) return parkings[i];
 			
 		}
@@ -430,7 +422,7 @@ function GMap(){
 			map.current_georesults = new Object();	
 			map.current_georesults.streets = new Array();
 			map.current_georesults.markers = new Object();
-	    	if (status == google.maps.GeocoderStatus.OK) {
+	    		if (status == google.maps.GeocoderStatus.OK) {
 				//console.dir(results);
 				$(results).each(function(idx){
 					//console.dir(results[idx]);
@@ -438,7 +430,7 @@ function GMap(){
 				});
 				//console.dir(map.current_georesults.streets);
 				if (map.hand_made_street == true) actions.showStreetSearchingResults(true);
-      		} 
+      			} 
 			else {
 				//actions.showStreetSearchingResults();
 				alert("Геокодирование неудачно по следующей причине: " + status);	
@@ -448,20 +440,20 @@ function GMap(){
 	
 	this.getStreet = function(street,show) {
 		show = show || false;
-    	this.geocoder.geocode( { 'address': street, 'bounds': map.map.getBounds()}, function(results, status) {
+    		this.geocoder.geocode( { 'address': street, 'bounds': map.map.getBounds()}, function(results, status) {
 			if ((map.current_georesults) && (map.current_georesults.markers) && (map.current_georesults.markers.street)) map.current_georesults.markers.street.setMap(null);
 			if ((map.current_georesults) && (map.current_georesults.markers) && (map.current_georesults.markers.number)) map.current_georesults.markers.number.setMap(null);
 			map.current_georesults = new Object();	
 			map.current_georesults.streets = new Array();
 			map.current_georesults.markers = new Object();
-	    	if (status == google.maps.GeocoderStatus.OK) {
+	    		if (status == google.maps.GeocoderStatus.OK) {
 				//console.dir(results);
 				$(results).each(function(idx){
 					//console.dir(results[idx]);
 					if ((map.checkStreetAddressComponents(results[idx].address_components) >= 3) && (results[idx].types.indexOf("route") > -1)) map.current_georesults.streets.push(results[idx]);
 				});
 				if (show) actions.showStreetSearchingResults(true);
-      		} 
+      			} 
 			else {
 				if (show) {
 					actions.showStreetSearchingResults();
@@ -505,8 +497,8 @@ function GMap(){
 					animation: google.maps.Animation.DROP,
 					title: title,
 					shadow: shadow,
-    			    icon: image,
-			        shape: shape
+    			    		icon: image,
+			        	shape: shape
    				});
 				if (title.length > 0) {
 					google.maps.event.addListener(this.current_georesults.markers.street, 'click', function() {
@@ -535,8 +527,8 @@ function GMap(){
 					animation: google.maps.Animation.DROP,
 					title: title,
 					shadow: shadow,
-    			    icon: image,
-			        shape: shape
+    			    		icon: image,
+			        	shape: shape
    				});	
 				if (marker_drag == true) 
 					google.maps.event.addListener(this.current_georesults.markers.number, 'dragend', function() {
@@ -555,8 +547,8 @@ function GMap(){
 					animation: google.maps.Animation.DROP,
 					title: title,
 					shadow: shadow,
-    			    icon: image,
-			        shape: shape
+    			    		icon: image,
+			        	shape: shape
    				});
 				if (marker_drag == true) 
 					google.maps.event.addListener(this.current_georesults.markers.street, 'dragend', function() {
@@ -659,7 +651,7 @@ function GMap(){
 			this.geocoder.geocode( { 'address': street.name+" "+points[idx].adr+" "+street.city, 'bounds': map.map.current_bounds}, function(results, status) {
 				//console.dir(street);																											 
 				//console.dir(results);
-		    	if (status == google.maps.GeocoderStatus.OK) {
+		    		if (status == google.maps.GeocoderStatus.OK) {
 					for (var i=0;i<results.length;i++)
 						if ((results[i].types.indexOf("street_address") > -1) && ((map.getAddressComponentByType(results[i].address_components,"street_number")).long_name.toUpperCase() == points[idx].adr.toUpperCase()) && (((map.getAddressComponentByType(results[i].address_components,"locality")).long_name == street.city) ||((map.getAddressComponentByType(results[i].address_components,"locality")).long_name == street.city_ukr))  && (!results[i].partial_match)) {
 							points[idx].latlng = results[i].geometry.location;
@@ -668,7 +660,7 @@ function GMap(){
 							break;
 						}
 					if (points[idx].near == true) points[idx].latlng = new google.maps.LatLng(street.lat,street.lng);
-		      	} 
+		      		} 
 				else {
 					points[idx].near = true;
 					points[idx].latlng =new google.maps.LatLng(street.lat,street.lng);
@@ -704,7 +696,6 @@ function GMap(){
 }
 
 // объект запросов к БД
-
 function AjaxQuery() {
 	self = this;
 
@@ -729,13 +720,11 @@ function AjaxQuery() {
 					alert("Сохранено");
 				}
 				else {
-					alert(json.error);//checkError(json.error);
+					alert(json.error);
 				}
-				//showLoader(false);
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
 				alert(textStatus);
-				//showLoader(false);
 			}
 		});
 	}
@@ -757,14 +746,11 @@ function AjaxQuery() {
 					ajax_query.getStreets();
 				}
 				else {
-					alert(json.error);//checkError(json.error);
-					//alert(json.sql);
+					alert(json.error);
 				}
-				//showLoader(false);
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
 				alert(textStatus);
-				//showLoader(false);
 			}
 		});		
 	}
@@ -783,14 +769,11 @@ function AjaxQuery() {
 					alert("Удалено");
 				}
 				else {
-					alert(json.error);//checkError(json.error);
-					//alert(json.sql);
+					alert(json.error);
 				}
-				//showLoader(false);
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
 				alert(textStatus);
-				//showLoader(false);
 			}
 		});		
 	}
@@ -886,7 +869,7 @@ function AjaxQuery() {
 					}
 				}
 				else {
-					alert(json.error);//checkError(json.error);
+					alert(json.error);
 				}
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -918,7 +901,7 @@ function AjaxQuery() {
 					}
 				}
 				else {
-					alert(json.error);//checkError(json.error);
+					alert(json.error);
 				}
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -944,7 +927,7 @@ function AjaxQuery() {
 					}
 				}
 				else {
-					alert(json.error);//checkError(json.error);
+					alert(json.error);
 				}
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -997,7 +980,7 @@ function AjaxQuery() {
 					}
 				}
 				else {
-					alert(json.error);//checkError(json.error);
+					alert(json.error);
 				}
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1024,7 +1007,7 @@ function AjaxQuery() {
 					}
 				}
 				else {
-					alert(json.error);//checkError(json.error);
+					alert(json.error);
 				}
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1068,7 +1051,7 @@ function AjaxQuery() {
 					}
 				}
 				else {
-					alert(json.error);//checkError(json.error);
+					alert(json.error);
 				}
 				if (map.completed_polygon !== null) {
 					map.completed_polygon.setMap(null);
@@ -1101,7 +1084,7 @@ function AjaxQuery() {
 						}
 					}
 					else {
-						alert(json.error);//checkError(json.error);
+						alert(json.error);
 					}
 				},
 				error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1112,9 +1095,6 @@ function AjaxQuery() {
 	}
 	
 	this.saveDistance = function(points,legs,saveanyway){
-		//console.dir(points);
-		//console.dir(legs);
-		//console.log(saveanyway);
 		if (saveanyway !== true) saveanyway = false;
 		var distance_arr = new Array();
 		for (var i=0;i<points.length-1;i++)
@@ -1137,7 +1117,7 @@ function AjaxQuery() {
 					if (typeof actions == "undefined") arm.saveDistance(distance_arr,saveanyway);
 				}
 				else {
-					alert(json.error);//checkError(json.error);
+					alert(json.error);
 				}
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1147,7 +1127,6 @@ function AjaxQuery() {
 	}
 	
 	this.checkDistance = function(points,near,add_pay,order_number){
-		//console.log(order_number);
 		var distance_arr = new Array();
 		for (var i=0;i<points.length-1;i++)
 			distance_arr.push({
@@ -1319,7 +1298,7 @@ function AjaxQuery() {
 						}
 					}
 					else {
-						alert(json.error);//checkError(json.error);
+						alert(json.error);
 					}
 				},
 				error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1346,7 +1325,7 @@ function AjaxQuery() {
 					}
 				}
 				else {
-					alert(json.error);//checkError(json.error);
+					alert(json.error);
 				}
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1375,11 +1354,10 @@ function AjaxQuery() {
 								$("#transitInsert").removeClass("hidden");
 								$("#transitSave").addClass("hidden");
 							}
-							//else arm.showParkings(false);
 						}
 					}
 					else {
-						alert(json.error);//checkError(json.error);
+						alert(json.error);
 					}
 				},
 				error: function (XMLHttpRequest, textStatus, errorThrown) {
